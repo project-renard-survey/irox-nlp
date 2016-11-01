@@ -25,8 +25,10 @@ package IroX::NLP::Engines::MITIE::NameFinder {
 	sub get_tags {
 		my $self = shift();
 
-		return $self->_ner()
-			->get_possible_tags();
+		return [
+			map { lc( $_ ) } $self->_ner()
+				->get_possible_ner_tags()
+		];
 	}
 
 	sub get_entities {
@@ -39,9 +41,9 @@ package IroX::NLP::Engines::MITIE::NameFinder {
 			map {
 				IroX::NLP::Models::Span->new(
 					{
-						tag => $_->[1],
+						tag => lc( $_->[1] ),
 						score => $_->[2],
-						tokens => @$tokens[ @{ $_->[0] } ],
+						tokens => [ @$tokens[ @{ $_->[0] } ] ],
 						range => $_->[0],
 					}
 				)

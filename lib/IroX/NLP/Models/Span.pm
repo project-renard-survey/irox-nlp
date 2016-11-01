@@ -17,7 +17,7 @@ package IroX::NLP::Models::Span {
 
 	has 'tokens' => (
 		is => 'ro',
-		isa => 'ArrayRef[Str`]',
+		isa => 'ArrayRef[Str]',
 		default => sub { [] }
 	);
 
