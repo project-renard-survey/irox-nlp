@@ -39,14 +39,7 @@ ok( $label1->score() > 0, 'Scoring more than 0!' );
 my $filename = sprintf( '/tmp/%s.dat', $$ );
 $categorizer->save( $filename );
 
-my $instance = IroX::NLP::Engines::MITIE::Categorizer->new(
-	{
-		models => [
-			$filename,
-			'/opt/MITIE-models/english/total_word_feature_extractor.dat',
-		]
-	}
-);
+my $instance = IroX::NLP::Engines::MITIE::Categorizer->new( { model => $filename } );
 isa_ok( $instance, 'IroX::NLP::Engines::MITIE::Categorizer' );
 
 my $label2 = $instance->categorize( [ qw( A bad day ) ] );

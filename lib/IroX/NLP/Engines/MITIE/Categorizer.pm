@@ -5,13 +5,9 @@ package IroX::NLP::Engines::MITIE::Categorizer {
 
 	use IroX::NLP::Models::Label ;
 
-	has 'models' => (
+	has 'model' => (
 		is => 'ro',
-		isa => 'ArrayRef[Str]',
-		traits => [ qw( Array ) ],
-		handles => {
-			all_models => 'elements',
-		}
+		isa => 'Str',
 	);
 
 	has '_categorizer' => (
@@ -20,7 +16,7 @@ package IroX::NLP::Engines::MITIE::Categorizer {
 		lazy => 1,
 		default => sub {
 			IroX::NLP::Engines::MITIE::Categorizer::text_categorizer->new(
-				shift()->all_models()
+				shift()->model()
 			);
 		}
 	);
@@ -43,10 +39,7 @@ package IroX::NLP::Engines::MITIE::Categorizer {
 		my ( $self, $filename ) = @_;
 
 		$self->_categorizer()
-			->save_to_disk(
-				$filename,
-				$Inline::Python::Boolean::true
-			);
+			->save_to_disk( $filename );
 	}
 
 	__PACKAGE__->meta()->make_immutable();
